@@ -2,7 +2,7 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-
+import json
 import app_tokens
 
 #Variables that contains the user credentials to access Twitter API 
@@ -16,11 +16,13 @@ api_secret =  app_tokens.API_SECRET
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-        print(data)
+        tweet = json.loads(data)
+        print(tweet["text"] + '\n')
         return True
 
     def on_error(self, status):
-        print(status)
+        #print(status)
+        pass
 
 
 if __name__ == '__main__':
@@ -31,5 +33,6 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
 
+
     #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['python', 'javascript', 'ruby'])
+    stream.filter(track=['peter'])
